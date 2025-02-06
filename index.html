@@ -1,0 +1,203 @@
+<link rel="manifest" href="/manifest.json">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Productivity Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1b2a4e, #284e91);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-bottom: 3px solid #3498db;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        button:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        section {
+            margin: 20px auto;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            width: 85%;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        input {
+    color: white;
+}
+
+        input, select {
+            padding: 12px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 80%;
+            max-width: 400px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 Dominate Your Goals</h1>
+        <p>Push your limits. Work 100+ hours a week. Achieve greatness!</p>
+    </header>
+    
+    <section id="input-section">
+        <input type="text" id="task-input" placeholder="Add a task, goal, or book">
+        <input type="date" id="deadline-input">
+        
+        <select id="category">
+            <option value="Work">💼 Work</option>
+            <option value="Health">💪 Health</option>
+            <option value="Learning">📖 Learning</option>
+            <option value="Personal">🏡 Personal</option>
+        </select>
+        
+        <button id="add-task">➕ Add</button>
+    </section>
+    
+    <section id="task-list">
+        <h2>📌 Your Missions</h2>
+        <ul id="tasks"></ul>
+    </section>
+    
+    <section id="progress-section">
+        <h2>🏆 Your Progress</h2>
+        <progress id="progress-bar" value="0" max="100"></progress>
+        <p id="xp-points">XP: 0</p>
+        <button id="reset-progress">🔄 Reset Progress</button>
+    </section>
+
+    <section id="leaderboard">
+        <h2>🏅 Productivity Leaderboard</h2>
+        <ol id="leaderboard-list">
+            <li>You - 0 XP</li>
+        </ol>
+    </section>
+
+    <section id="inspiration-section">
+        <h2>💡 Stay Inspired</h2>
+        <p id="quote-text">"Loading motivation..."</p>
+        <button id="fetch-quote">🔄 New Quote</button>
+    </section>
+    
+    <section id="reminder-section">
+        <h2>⏰ Set a Reminder</h2>
+        <input type="time" id="reminder-time">
+        <button id="set-reminder">🔔 Set Reminder</button>
+        <p id="reminder-status">No reminder set.</p>
+    </section>
+    
+    <section id="streak-section">
+        <h2>🔥 Daily Streak</h2>
+        <p id="streak-text">Current Streak: 0 Days</p>
+        <button id="reset-streak">🔄 Reset Streak</button>
+    </section>
+    
+    <section id="focus-mode">
+        <h2>⚡ Ultra Focus Mode</h2>
+        <button id="start-focus">🚀 Start Focus Mode</button>
+        <p id="focus-status">Focus mode is off</p>
+    </section>
+    
+    <section id="time-tracker">
+        <h2>⏳ Time Tracking</h2>
+        <button id="start-tracking">▶ Start</button>
+        <button id="stop-tracking">⏹ Stop</button>
+        <p id="tracked-time">Total Time: 0h 0m</p>
+    </section>
+    
+    <footer>
+        <p>"Success is no accident. It's hard work, perseverance, and sacrifice!" – You</p>
+    </footer>
+
+    <script>
+        document.getElementById("add-task").addEventListener("click", function() {
+            let taskInput = document.getElementById("task-input").value;
+            if (taskInput) {
+                let li = document.createElement("li");
+                li.textContent = taskInput;
+                document.getElementById("tasks").appendChild(li);
+                document.getElementById("task-input").value = "";
+            }
+        });
+
+        document.getElementById("fetch-quote").addEventListener("click", function() {
+            let quotes = [
+                "The only way to do great work is to love what you do. - Steve Jobs",
+                "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
+                "Don’t watch the clock; do what it does. Keep going. - Sam Levenson"
+            ];
+            let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById("quote-text").textContent = randomQuote;
+        });
+
+        document.getElementById("set-reminder").addEventListener("click", function() {
+            let time = document.getElementById("reminder-time").value;
+            document.getElementById("reminder-status").textContent = time ? `Reminder set for ${time}` : "No reminder set.";
+        });
+
+        let streak = 0;
+        document.getElementById("reset-streak").addEventListener("click", function() {
+            streak = 0;
+            document.getElementById("streak-text").textContent = `Current Streak: ${streak} Days`;
+        });
+
+        let progress = 0;
+        document.getElementById("reset-progress").addEventListener("click", function() {
+            progress = 0;
+            document.getElementById("progress-bar").value = progress;
+            document.getElementById("xp-points").textContent = "XP: 0";
+        });
+
+        let isFocusOn = false;
+        document.getElementById("start-focus").addEventListener("click", function() {
+            isFocusOn = !isFocusOn;
+            document.getElementById("focus-status").textContent = isFocusOn ? "Focus mode is ON" : "Focus mode is OFF";
+        });
+
+        let startTime, endTime;
+        document.getElementById("start-tracking").addEventListener("click", function() {
+            startTime = new Date();
+        });
+
+        document.getElementById("stop-tracking").addEventListener("click", function() {
+            if (startTime) {
+                endTime = new Date();
+                let timeSpent = Math.round((endTime - startTime) / 60000);
+                document.getElementById("tracked-time").textContent = `Total Time: ${Math.floor(timeSpent / 60)}h ${timeSpent % 60}m`;
+            }
+        });
+    </script>
+</body>
+</html>
